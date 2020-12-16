@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import { toggle, createRandom } from './store';
 
 import { connect } from 'react-redux';
 
@@ -34,13 +35,8 @@ const _Groceries = (props) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    toggle: async (grocery) => {
-      const updated = (
-        await axios.put(`/api/groceries/${grocery.id}`, {
-          purchased: !grocery.purchased,
-        })
-      ).data;
-      dispatch({ type: 'UPDATE', grocery: updated });
+    toggle: (grocery) => {
+      dispatch(toggle(grocery));
     },
     create: async () => {
       const grocery = (await axios.post('/api/groceries/random')).data;
